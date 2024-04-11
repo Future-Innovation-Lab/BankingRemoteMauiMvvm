@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:models="clr-namespace:BankingRemoteApi.Models;assembly=BankingRemoteCore"
+
+             x:Class="BankingRemoteMaui.MainView">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+
+
+            <Label Text="Client Information" FontAttributes="Bold" FontSize="Medium"/>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Text="First Name" FontAttributes="Bold"/>
+                <Label Grid.Row="1" Text="Surname" FontAttributes="Bold"/>
+                <Label Grid.Row="2" Text="Email" FontAttributes="Bold"/>
+
+                <Entry Grid.Column="1"  Text="{Binding CurrentClient.FirstName }"/>
+                <Entry Grid.Row="1" Grid.Column="1" Text="{Binding CurrentClient.Surname }"/>
+                <Entry Grid.Row="2" Grid.Column="1" Text="{Binding CurrentClient.UserAccount.EmailAddress }"/>
+
+            </Grid>
+
+            <Label Text="First Bank Account" FontAttributes="Bold" FontSize="Medium"/>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Text="Bank Account Number" FontAttributes="Bold"/>
+                <Label Grid.Row="1" Text="Bank Balance" FontAttributes="Bold"/>
+
+                <Label Grid.Column="1" Text="{Binding FirstBankAccont.BankAccountNumber }"/>
+                <Label  Grid.Row="1" Grid.Column="1" Text="{Binding FirstBankAccont.Balance }"/>
+
+            </Grid>
+
+            <Label Text="All Transactions" FontAttributes="Bold" FontSize="Medium"/>
+
+
+            <ListView ItemsSource="{Binding Transactions}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Transaction">
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Text="{Binding Reference }"/>
+                                <Label Grid.Column="1" Grid.Row="0" Text="{Binding Value }"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+
+            <Button
+                Text="Reload Data" 
+                Command="{Binding ReloadCommand}"
+                HorizontalOptions="Fill" />
+
+            <Button Text="Save Data" Command="{Binding SaveCommand}"  />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+
+</ContentPage>
